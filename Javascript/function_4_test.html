@@ -1,0 +1,25 @@
+<script>
+    var rightid="korea";
+    var rightpw="1234";
+
+    function login(id,pw){
+        if(id==rightid)
+        {
+            if(pw==rightpw){
+                document.write(id+"님, 방문을 환영합니다");
+            }
+            else{
+                alert("잘못된 비밀번호입니다");
+            }
+        }
+        else{
+            alert("존재하지 않는 아이디입니다");
+        }
+    }
+
+    var userid=prompt("아이디를 입력하세요","");
+    var userpw=prompt("패스워드를 입력하세요","");
+
+    login(userid,userpw);
+
+</script>
