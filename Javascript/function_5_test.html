@@ -1,0 +1,18 @@
+<script>
+    function testAvg(arrdata){
+        var sum=0;
+        for(var i=0;i<arrdata.length;i++)
+        {
+            sum+=Number(prompt(arrdata[i]+"점수는?","0"));
+
+        }
+        var avg=sum/arrdata.length;
+        return avg;
+
+    }
+
+    var arrsubject=["국어","수학"];
+    var result=testAvg(arrsubject);
+
+    document.write("평균 점수는"+result+"점입니다");
+    </script>
