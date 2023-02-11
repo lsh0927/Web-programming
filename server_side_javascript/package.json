@@ -1,5 +1,5 @@
 {
-  "name": "server_side_javascript",
+  "name": "app",
   "version": "1.0.0",
   "description": "server side javascript tutorials",
   "main": "hello.js",
@@ -9,6 +9,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.18.2",
     "underscore": "^1.13.6"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "app.js"
   }
 }
