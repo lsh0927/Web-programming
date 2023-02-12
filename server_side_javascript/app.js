@@ -1,7 +1,8 @@
 var express= require('express');
 var app= express();
+var bodyparser=require('body-parser');
 
-
+app.use(bodyparser.urlencoded({extended:false }))//모든 요청은 이 미들웨어를 먼저 통과한뒤에 라우터가 동작함
 app.locals.pretty = true;
 
 app.set('views','./views'); //이 디렉토리에
@@ -77,8 +78,18 @@ app.get('/form',function(req,res){//어떤 태그에 속성을 나타내고 싶�
 //html에서 form은 url을 생성해주고, 웹브라우저는 form태그에 적당한 url을 자동으로 생성해 서버에 보내준다.
 //form_receiver는 사용자가 전송한 title과 descrpition을 저장할 수 있게 됨.
 app.get('/form_receiver',function(req,res){
-    var title= req.query.title;
-    var description= req.query.description;
+    // var title= req.query.title;
+    // var description= req.query.description;
+    // res.send(title+','+description);
+})
+
+//get과 post의 차이는?
+//post->url로 데이터 전송 x, 우리눈에 보이지 않음
+//get은 그 반대?
+
+app.post('/form_receiver',function(req,res){
+    var title=req.body.title; //body파서를 통해 req객체의 body객체
+    var description=req.body.description
     res.send(title+','+description);
 })
 
@@ -116,3 +127,13 @@ app.listen(3000,function(){
 app.get('/route',function(req,res){//user가 홈으로 접속하면 두번째 인자의 함수 실행
     res.send('hello router');
  });
+
+ //언제 get을 쓰고 post를 쓸까?
+ //line 18의 예제에서 원하는 것은 링크를 눌렀을때 주소가 바뀌는 것이다
+ //정보에 대한 주소를 나타낼때 주소에 모든 정보를 나타내야한다.
+
+ // get방식이라면, 제출한 정보가 url에 그대로 노출되어버리므로,
+ // 전송시 정보를 url에 공유하지 않는 post를 사용한다.
+ //그러나 post도 데이터를 가로채지 못하는 것은 아니라 보안상 안전x
+
+//url을 통해서 쿼리스트링을 가지고 데이터를 전송하면 길이의 한계가 있다.
