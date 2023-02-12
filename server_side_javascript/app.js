@@ -1,7 +1,41 @@
 var express= require('express');
 var app= express();
 
+
+app.locals.pretty = true;
+
+app.set('views','./views'); //이 디렉토리에
+app.set('view engine', 'jade'); //jade라는 템플릿엔진과 우리가 만드는 앱 프레임워크인 익스프레스를 연결
+
 app.use(express.static('public')); //정적인 디렉토리를 지정할 범위
+
+
+app.get('/topic',function(req,res){//express가 함수를 호출함
+    res.send(req.query.id); //req객체가 갖는 쿼리라는 객체의 id변수를 통해 사용자가 퀴리 스트링으로 접속한 정보전달
+})
+// app.get('/topic',function(req,res){//web page를 프로그래밍적으로 코딩
+//     var topics=[
+//         'Javascript is...',
+//         'Nodejs is...',
+//         'Express is...'
+//     ];
+//     var str= `
+//     <a href="/topic?id=0">JavaScript</a><br>
+//     <a href="/topic?id=1">Nodejs</a><br>
+//     <a href="/topic?id=0">Express</a><br></br>
+//     `;
+//     var output=str+topics[req.query.id]
+//     res.send(output);
+// })
+
+
+
+
+
+app.get('/template',function(req,res){
+    res.render('temp',{time:Date(),_title:'Jade'}); //template이라는 경로로 들어온 유저에게 함수가 실행되면서 temp라는 템플릿 파일을 웹페이지로 렌더링해서 전송
+
+})
 
 app.get('/',function(req,res){//user가 홈으로 접속하면 두번째 인자의 함수 실행
    res.send('hello home page');
