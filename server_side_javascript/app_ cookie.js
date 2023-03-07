@@ -2,7 +2,7 @@ var express= require('express');
 var app=express();
 
 var cookieParser=require('cookie-parser'); //미들웨어
-app.use(cookieParser());
+app.use(cookieParser('23421342341253g234wf#@$q')); //key값
 
 var products={
     1:{title:'The history of web 1'}, //객체에 담겨있는 값
@@ -23,20 +23,60 @@ app.get('/products',function(req,res){
     res.send(`<h1>Products</h1><ul>${output}</ul><a href="/cart">Cart</a>`);
 });
 
+/*
+cart ={앞은 제품 번호, 뒤는 수량
+    1:2,
+    2:1,
+    
+}
+*/
+
+
+app.get('/cart/:id',function(req,res){
+    var id= req.params.id;
+    if(req.signedCookies.cart){//세팅되어있다면
+        var cart=req.signedCookies.cart;
+    }else{
+        var cart= {};
+    }
+    if(!cart[id]){//cart[id]가 존재하지 않을때
+        cart[id]=0;
+    }
+    cart[id]= parseInt(cart[id])+1;
+    res.cookie('cart',cart,{signed:true});
+    res.redirect('/cart');
+});
+
+app.get('/cart',function(req,res){
+   var cart= req.signedCookies.cart;
+   if(!cart){
+    res.send('emthy!');
+   }
+   else{
+        var output='';
+        for(var id in cart){
+            output+=`<li>${products[id].title} (${cart[id]})</li>`;
+        }
+   }
+    res.send(`
+    <h1>Cart</h1>
+    <ul>${output}</ul>
+    <a href="/products">Products List</a>`);
+});
 
 
 app.get('/count',function(req,res){
     
-    if(req.cookies.count){
-        var count= parseInt(req.cookies.count); //쿠키 카운터 1을 숫자로 바꿈
+    if(req.signedCookies.count){//암호화!
+        var count= parseInt(req.signedCookies.count); //쿠키 카운터 1을 숫자로 바꿈
     }
     else{
         var count=0;
     }
     count=count+1;
     //응답할때 count++하여 웹서버에 보낼거니까
-    res.cookie('count',count);//미들웨어로 cookie라는 메서드가 생김
-    res.send('count : '+req.cookies.count);
+    res.cookie('count',count,{signed:true});//미들웨어로 cookie라는 메서드가 생김
+    res.send('count : '+req.signedCookies.count);
 });
 
 app.listen(3003,function(){
