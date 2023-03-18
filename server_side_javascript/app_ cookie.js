@@ -9,6 +9,13 @@ var products={
     2:{title:'The next web'}
 }; //database 대용
 
+
+//사용자의 컴퓨터에 데이터를 저장하고, 가져올수있는 쿠키
+//서버와 컴퓨터가 통신하는 과정에서 중요한 데이터가 노출되거나 심어져있는 것은 보안상 매우매우매우 위험
+//쿠키 기능 & 데이터 저장 공간을 조합해 session을 만들어 동작시킴
+//session: save only id
+
+
 app.get('/products',function(req,res){
     //product 객체의 내용가져오기
     var output='';
