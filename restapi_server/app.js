@@ -4,7 +4,7 @@ const Web3 = require('web3');
 const app = express();
 const web3 = new Web3('http://localhost:7545');
 const contractAddress = 
-'0xC6411F693c4FfA3CE7d7906f7e0B3A5449A1F08e'; // Replace with the address of your deployed contract
+'0x66e4788dD87356ca8C2BA78199FFc7759633537D'; // Replace with the address of your deployed contract
 
 
 const contractAbi =
@@ -20,7 +20,6 @@ const contractAbi =
 		"name": "setMessage",
 		"outputs": [],
 		"stateMutability": "nonpayable",
-		"type": "function"
 	},
 	{
 		"inputs": [],
@@ -49,7 +48,7 @@ app.use(express.json());
 
   app.post('/setData', async (req, res) => {
    const vae = req.body.greeting;
-   const accountAddress = '0x64B4E78932B33482d05cF114844e659a257006B0';
+   const accountAddress = '0x100c2597E8e56d0f409D8f7f72CBA1FF5823589d';
    const value2 = await contract.methods.setMessage(vae).send({ from: accountAddress });
    res.send(vae);
   });
