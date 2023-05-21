@@ -2,13 +2,9 @@ const express = require('express');
 const Web3 = require('web3');
 
 const app = express();
-const web3 = new Web3('http://localhost:7545');
+const web3 = new Web3('http://59.6.236.50:7545');
 const contractAddress = 
-
-'0x4ec5DFA0B2118B924832cDe808ea5Da44B279232'; // Replace with the address of your deployed contract
-
-
-
+'0xDa217aa171E8045E8F54D3E3C22ef757aee249Fc'; // Replace with the address of your deployed contract
 const contractAbi =
 [
 	{
@@ -78,29 +74,20 @@ app.use(express.json());
 			 
 			}
 			
-			// Add the data item to the array of data
-			
-			// Send the data back to the client when all items have been retrieved
-			//if (data.length === numItems) {
-			
-
-			//}
 		  });
 		}
 	  });
   });
-
- 
-
   app.post('/setData', async (req, res) => {
-   const vae = req.body.greeting;
-<<<<<<< HEAD
-   const accountAddress = '0x100c2597E8e56d0f409D8f7f72CBA1FF5823589d';
-=======
-   const accountAddress = '0xd498edF2a18cEFB5d81D5b4e043cf68a6262b49C';
->>>>>>> origin
+   const vae = req.body;
+   //항목마다 변수 설정을 하고, 해당 값을 호출하는 메소드를 여러번 선언
+   const accountAddress = '0x58435079A26bF31D2879a8f4550CC510C8433f63';
    const value2 = await contract.methods.setMessage(vae).send({ from: accountAddress });
+   // 여기를 반복하면 원하는 항목에 대한 결과를 알 수 있음
+   // ex) const vae3에 req.body.id를 넣고 postman으로 전송시
+   // const value3= await contract.methods.setMessage(vae3).send({ from: accountAddress });등으로 변수에 저장, console.log혹은 res.send로 확인 가능
    contract.methods.getMessage().call()
+
    .then((result) => {
  	  // Format the data as necessary
 	  const formattedData = result;
@@ -117,95 +104,6 @@ app.use(express.json());
  //  res.send(vae);
 
   });
-
-  app.get('/status-board', async (req, res) => {
-	const message = await contract.methods.getMessage().call();
-	const formattedMessage = `Message: ${message}`;
-	res.send(`
-  <html>
-	<head>
-	  <meta charset="UTF-8">
-	  <title>My App</title>
-	</head>
-	<body>
-	  <h1>My App</h1>
-	  <p id="message"></p>
-	  <script src="https://cdn.jsdelivr.net/npm/web3@1.3.0/dist/web3.min.js"></script>
-	  <script>
-		const web3 = new Web3('http://localhost:7545');
-		const contractAddress = '0x4ec5DFA0B2118B924832cDe808ea5Da44B279232';
-		const contractAbi = [
-			{
-				"inputs": [
-					{
-						"internalType": "string",
-						"name": "_message",
-						"type": "string"
-					}
-				],
-				"name": "setMessage",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "getMessage",
-				"outputs": [
-					{
-						"internalType": "string",
-						"name": "",
-						"type": "string"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			}
-			 ];
-		const contract = new web3.eth.Contract(contractAbi, contractAddress);
-  
-		contract.methods.getMessage().call()
-		  .then((result) => {
-			document.getElementById('message').textContent = result;
-		  })
-		  .catch((error) => {
-			console.error(error);
-		  });
-	  </script>
-	</body>
-  </html>
-	`);
-  });
-/*
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>My App</title>
-  </head>
-  <body>
-    <h1>My App</h1>
-    <p id="message"></p>
-    <script src="https://cdn.jsdelivr.net/npm/web3@1.3.0/dist/web3.min.js"></script>
-    <script>
-      const web3 = new Web3('http://localhost:8545');
-      const contractAddress = '0x1234567890123456789012345678901234567890'; // Replace with the address of your deployed contract
-      const contractAbi = [ Replace with the ABI of your smart contract ];
-      const contract = new web3.eth.Contract(contractAbi, contractAddress);
-
-      contract.methods.getMessage().call()
-        .then((result) => {
-          document.getElementById('message').textContent = result;
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    </script>
-  </body>
-</html>
-
-*/
-
 
 
   app.listen(3000, () => {
